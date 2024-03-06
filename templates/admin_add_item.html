@@ -1,0 +1,28 @@
+{%extends 'base.html' %}
+{%block title%}Add Item{%endblock title%}
+
+{%block content%}
+<div class="container">
+    <div class="display-5 text-center my-5">Add Items</div>
+    <div class="row justify-content-center align-items-center">
+        <div class="col-6 mb-3 p-2">
+            <form action="" method="post" enctype="multipart/form-data">
+                {%csrf_token%}
+                {% for i in form %}
+                {{i}}
+                {%endfor%}
+                {% if form.errors or form.non_field_error %}
+                <div>
+                    {%for f in form %}
+                    {{f.errors}}
+                    {%endfor%}
+                    {{form.non_field_errors}}
+                </div>
+                {%endif%}
+                <input type="submit" class="btn btn-success m-2" name="" id="">
+            </form>
+
+        </div>
+    </div>
+</div>
+{%endblock%}

@@ -1,0 +1,109 @@
+{%extends 'base.html' %}
+{% load static %}
+{%block title%}Home{%endblock title%}
+
+{%block content%}
+<div class="container-fluid m-0 p-0 g-0 w-100">
+  <img src="{% static 'images/vecteezy_shopping-online-on-smartphone-and-new-buy-sale-promotion_7153463.jpg' %}"
+    class="img-fluid" alt="">
+</div>
+<div class="container text-center">
+  <p class="display-4 my-5 py-5">Browse Categories</p>
+</div>
+<div class="container">
+  <div class="album py-5 bg-body-tertiary">
+    <div class="container">
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        {%for i in categories %}
+        <div class="col">
+          <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg"
+            style="background-image: url('{{i.image.url}}');background-size:cover;background-repeat:no-repeat;background-position: center;">
+            <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
+              <h3 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold text-shadow-5">{{i.name}}</h3>
+              <ul class="d-flex list-unstyled mt-auto">
+                <li class="d-flex align-items-center me-3">
+                  <a href="{% url 'core:ProductsInEachCategory' i.name %}" class="btn btn-lg btn-dark">View</a>
+                </li>
+                <li class="d-flex align-items-center">
+                  <small class="text-light">{{i.items.count}} : Products</small>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        {%endfor%}
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row text-center">
+  <div class="col">
+    <p class="display-5 my-5">Latest Products</p>
+  </div>
+</div>
+<div class="row text-center">
+  <div class="container marketing">
+    <!-- Three columns of text below the carousel -->
+    <div class="row">
+      {% for i in products %}
+      <div class="col-lg-4">
+        <img src="{{i.image.url}}" class="rounded-circle" width="140" height="140" role="img"
+          preserveAspectRatio="xMidYMid slice">
+        <h2 class="fw-normal">{{i.name}}</h2>
+        <p>{{i.description | truncatechars:55 }}</p>
+        <p><a class="btn btn-secondary" href="{% url 'core:ProductDetails' i.id %}">View details »</a></p>
+      </div>
+      {%endfor%}
+    </div>
+
+    <hr class="featurette-divider my-3">
+    <h2 class="featurette-heading fw-normal display-4 lh-1 my-5 py-5">Offer Zone <span class="text-body-secondary">It’ll
+        blow your mind.</span></h2>
+    <hr class="featurette-divider">
+    {% for i in offer_products %}
+    <!-- START THE Offer Zone -->
+    {% if forloop.counter|divisibleby:2 %}
+    <div class="row featurette gy-2 p-5 my-2">
+      <div class="col-md-7">
+        <h2 class="featurette-heading fw-normal lh-1">{{i.offer_item.name}}<span class="text-body-secondary"></span>
+        </h2>
+        <p class="lead">{{i.offer_item.description}}
+        <p class="lead fw-bold">Price: <span style="text-decoration:line-through" ;>
+            {{i.offer_item.price}}</span>
+        </p>
+        <p class="display-6">Effective Price: {{i.offer_discount}}</p>
+        <a href="{% url 'core:ProductDetails' i.offer_item.id %}" class="btn btn-dark btn-lg m-2">View</a>
+      </div>
+      <div class="col-md-5">
+        <img src="{{i.offer_item.image.url}}"
+          class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="350" height="350"
+          role="img" preserveAspectRatio="xMidYMid slice">
+      </div>
+    </div>
+    <hr class="featurette-divider">
+    {%else%}
+    <div class="row featurette gy-2 p-5 my-2">
+      <div class="col-md-7 order-md-2">
+        <h2 class="featurette-heading fw-normal lh-1">{{i.offer_item.name}}<span class="text-body-secondary"></span>
+        </h2>
+        <p class="lead">{{i.offer_item.description}}</p>
+        <p class="lead fw-bold">Price: <span style="text-decoration:line-through" ;>
+            {{i.offer_item.price}}</span>
+        </p>
+        <p class="display-6">Effective Price: {{i.offer_discount}}</p>
+        <a href="{% url 'core:ProductDetails' i.offer_item.id %}" class="btn btn-dark btn-lg m-2">View</a>
+      </div>
+      <div class="col-md-5 order-md-1">
+        <img src="{{i.offer_item.image.url}}"
+          class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="350" height="350"
+          role="img" preserveAspectRatio="xMidYMid slice">
+      </div>
+    </div>
+    <hr class="featurette-divider">
+    {%endif%}
+    <!-- /END THE Offer Zone -->
+    {%endfor%}
+
+  </div>
+</div>
+{%endblock content%}

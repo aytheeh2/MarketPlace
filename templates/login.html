@@ -1,0 +1,30 @@
+{%extends 'base.html' %}
+{%block title%}Login{%endblock title%}
+
+{%block content%}
+<div class="container">
+    <div class="row justify-content-center ">
+        <div class="col-6 mb-5">
+            <p class="display-4 text-start my-5">Login</p>
+            <form action="" method="post">
+                {%csrf_token%}
+                {% for field in form%}
+                {{field}}
+                {%endfor%}
+
+                {% if form.errors or form.non_field_errors %}
+                <div>
+                    {%for i in form%}
+                    {{i.error}}
+                    {%endfor%}
+                    {{form.non_field_errors}}
+                </div>
+                {%endif%}
+                <input class="btn btn-lg btn-success" type="submit" name="" id="">
+            </form>
+            <p class="lead my-3">Don't an account? <a href="{% url 'core:register' %}"
+                    class="btn btn-outline-dark btn-sm">Register</a></p>
+        </div>
+    </div>
+</div>
+{%endblock%}

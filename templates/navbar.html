@@ -1,0 +1,65 @@
+<nav class="navbar navbar-expand-lg bg-body-dark bg-dark sticky-top shadow" data-bs-theme="dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Navbar</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{% url 'core:home' %}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Link</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        Categories
+                    </a>
+                    <ul class="dropdown-menu ">
+                        {% for i in category_context %}
+                        <li><a class="dropdown-item"
+                                href="{% url 'core:ProductsInEachCategory' i.name %}">{{i.name}}</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        {%endfor%}
+                    </ul>
+                </li>
+                {% if request.user.is_authenticated %}
+                {% if request.user.is_superuser %}
+                <li class="nav-item">
+                    <a class="nav-link active text-warning" aria-disabled="true">Admin</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'core:admin_add_item' %}" class="nav-link active text-warning"
+                        aria-disabled="true">Add Item</a>
+                </li>
+                {%endif%}
+                <li class="nav-item">
+                    <a href="{% url 'cart:view_cart' %}" class="nav-link active" aria-disabled="true">Cart</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-disabled="true">Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'core:logout' %}" class="nav-link active" aria-disabled="true">Logout</a>
+                </li>
+                {%else%}
+                <li class="nav-item">
+                    <a href="{% url 'core:login' %}" class="nav-link active" aria-disabled="true">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'core:register' %}" class="nav-link active" aria-disabled="true">Register</a>
+                </li>
+                {%endif%}
+            </ul>
+            <form method="get" action="{% url 'core:search' %}" class="d-flex" role="search">
+                <input name="q" class="form-control me-2" type="search" placeholder="Search Products" aria-label="Search">
+                <button class="btn btn-outline-info" type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+</nav>

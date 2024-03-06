@@ -1,0 +1,92 @@
+{%extends 'base.html' %}
+{%block title%}{{product.name}}{%endblock title%}
+
+{%block content%}
+
+<div class="container">
+    <div class="bg-body-tertiary me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center">
+        <div class="my-3 p-3">
+            <h2 class="display-5">{{product.name}}</h2>
+            <p class="lead">{{product.description}}</p>
+        </div>
+        <div class="bg-white shadow-sm mx-auto p-5 " style="width: 80%; height: auto; border-radius: 21px 21px 0 0;">
+            <div class="row align-items-center">
+                <div class="col">
+                    <img class="img-fluid" src="{{product.image.url}}" alt="">
+                </div>
+                <div class="col">
+
+                    {% if product.offers.exists %}
+                    <p class="display-6">Offer Price: $ {{ product.offers.first.offer_discount }}</p>
+                    <p class="lead fs-4">Price: <span style="text-decoration: line-through;">$
+                            {{product.price}}</span></p>
+                    {% else %}
+                    <p class="display-6">Price: $ {{ product.price }}</p>
+                    {% endif %}
+                    <p class="lead fs-4">Seller: {{product.created_by}}</p>
+                    {% if product.stock > 0%}
+                    <a href="{% url 'cart:add_to_cart' product.id %}" class="my-2 mx-1 btn btn-dark">Add To Cart</a>
+                    {%else%}
+                    <a disabled href="{% url 'cart:add_to_cart' product.id %}" class="my-2 mx-1 btn btn-dark">Add To
+                        Cart</a>sds
+                    {%endif%}
+                    <a href="" class="my-2 mx-1 btn btn-success">Buy Now</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- related items section -->
+    {% if related_products %}
+    <div>
+        <p class="display-4 my-5 text-center p-5">Related Products</p>
+    </div>
+    <div class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-5">
+        {% for i in related_products %}
+        <div class="col">
+            <div class="card shadow-sm">
+                <img src="{{i.image.url}}" class="card-img-top" width="75%" height="225">
+                <div class="card-body">
+                    <p class="card-text fw-normal fs-4 text-center">{{i.name}}
+                        <span class="text-body-secondary ">Price :{{i.price}}</span>
+                    </p>
+                    <div class="d-flex justify-content-center align-items-end">
+                        <div class="btn-group">
+                            <a href="{% url 'core:ProductDetails' i.id %}"
+                                class="btn btn-lg  btn-outline-secondary">View</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {%endfor%}
+    </div>
+    {%else%}
+    <div>
+        <p class="display-4 text-center my-5">Browse Other Categories</p>
+    </div>
+    <div class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-5">
+        {% for i in other_categories %}
+        <div class="col">
+            <div class="card shadow-sm">
+                <img src="{{i.image.url}}" class="card-img-top" width="75%" height="225">
+                <div class="card-body">
+                    <p class="card-text">{{i.name}}
+                        <span class="text-body-secondary">Price :{{i.price}}</span>
+                    </p>
+                    <div class="d-flex justify-content-center align-items-end">
+                        <div class="btn-group">
+                            <a href="{% url 'core:ProductsInEachCategory' i.name %}"
+                                class="btn btn-lg  btn-outline-secondary">View</a>
+                        </div>
+                        <!-- <p class="text-body-secondary">Price :{{i.price}}</p> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        {%endfor%}
+    </div>
+    {%endif%}
+    <!-- END related items section -->
+</div>
+{%endblock%}

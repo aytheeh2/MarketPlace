@@ -1,0 +1,14 @@
+{%extends 'base.html' %}
+{%block title%}Add Item{%endblock title%}
+
+{%block content%}
+<div class="container text-center">
+    <p class="lead">Do you want to delete the item?</p>
+    <form  method="post">
+        {%csrf_token%}
+        <button class="btn btn-danger" type="submit" name="" id="">Delete</button>
+        <a href="{% url 'core:home' %}" class="btn btn-primary" type="button" name="" id="">Cancel</a>
+
+    </form>
+</div>
+{%endblock%}

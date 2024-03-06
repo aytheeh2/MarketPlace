@@ -1,0 +1,74 @@
+{%extends 'base.html' %}
+{%load static %}
+{%block title%}{{category.name}}{%endblock title%}
+
+{%block content%}
+<div class=" container">
+    <div class="row">
+        <p class="display-3 text-center my-5 py-5">{{category.name}}</p>
+        {% for i in products %}
+        <div class="col col-md-3 d-flex flex-column mx-auto border rounded ">
+            <div class="text-center">
+                <img src="{{i.image.url}}" class="img-fluid  p-1" style="height: 225px;" alt="">
+            </div>
+            <p class="lead fs-2 text-center">{{i.name}}</p>
+            {% if i.offers.exists %}
+            <p class="lead fs-4">Price: $ <span style="text-decoration: line-through;">{{i.price}}</span>
+                {{i.offers.first.offer_discount }}</p>
+            {% else %}
+            <p class="lead fs-4">Price: $ {{ i.price }}</p>
+            {% endif %}
+            <p class="lead text-start">{{i.description | slice:"0:160"}}..</p>
+            <div>
+                <a href="{% url 'core:ProductDetails' i.id %}" class="btn btn-secondary mt-auto mx-1 mb-2">View</a>
+                <a href="{% url 'cart:add_to_cart' i.id %}" class="btn btn-dark  mt-auto mx-1 mb-2">Add To Cart</a>
+                {% if request.user.is_authenticated and request.user.is_superuser %}
+                <a href="{% url 'core:admin_edit_item' i.id %}" class="btn mt-auto mx-1 mb-2 btn-danger">Edit</a>
+                <a href="{% url 'core:admin_delete_item' i.id %}" class="btn mt-auto mx-1 mb-2 btn-danger">Delete</a>
+                {%endif%}
+            </div>
+        </div>
+        {%empty%}
+        <div class=" col text-center my-5 py-5 g-5">
+            <p class="display-5">No products are available in this category!</p>
+        </div>
+        {%endfor%}
+    </div>
+    <div class="container">
+        <p class="display-5 text-center my-5 py-5">Other Categories</p>
+    </div>
+    <div id="myCarousel" class="carousel slide mb-6" data-bs-ride="carousel" data-interval="400">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class=""
+                aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2" class="active"
+                aria-current="true"></button>
+            <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        </div>
+        <div class="carousel-inner">
+            {% for i in categories %}
+            <div class="carousel-item {% if forloop.first %} active {% endif %}">
+                <img src="{{i.image.url}}" class="bd-placeholder-img " width="100%" height="600vh"
+                    preserveAspectRatio="xMidYMid slice" focusable="false">
+                <div class="container">
+                    <div class="carousel-caption text-center">
+                        <p><a class="btn btn-lg btn-dark" href="{% url 'core:ProductsInEachCategory' i.name %}">View
+                                {{i.name}}</a></p>
+                    </div>
+                </div>
+            </div>
+            {%endfor%}
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
+
+</div>
+{%endblock%}

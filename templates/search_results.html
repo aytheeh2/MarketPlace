@@ -1,0 +1,36 @@
+{%extends 'base.html' %}
+{%block title%}{%endblock title%}
+
+{%block content%}
+{% if search_results %}
+<div class="container">
+    <div class="row mx-auto justify-content-center">
+        <div class="col p-3 m-3">
+            <div class="align-items-stretch bg-body-tertiary ">
+                <p class="display-4 text-center m-3 p-3">Search Results for {{querry}}</p>
+                <div class="list-group list-group-flush border-bottom scrollarea">
+                    {%for i in search_results %}
+                    <a href="{% url 'core:ProductDetails' i.id %}"
+                        class="list-group-item list-group-item-action py-3 lh-sm">
+                        <div class="d-flex w-100 align-items-center justify-content-between">
+                            <strong class="mb-1">{{i.name}}</strong>
+                            <small class="text-body-secondary">{{i.category}}</small>
+                        </div>
+                        <div class="col-10 mb-1 small">{{i.description|truncatechars:90}}</div>
+                    </a>
+                    {%endfor%}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{%else%}
+<div class="row">
+    <div class="col m-5 p-5 text-center ">
+        <p class="display-4 ">No Search results for {{querry}}</p>
+        <p><a href="{% url 'core:home' %}" class="btn btn-dark btn-lg">Home</a></p>
+    </div>
+</div>
+
+{%endif%}
+{%endblock%}
