@@ -15,6 +15,7 @@ SECRET_KEY = 'django-insecure-r2anv@okl4q1rz*6uf&xy(2xmos+l(l69!zka9c-6t!5+!-_85
 DEBUG = True
 
 ALLOWED_HOSTS = []
+SECURE_CROSS_ORIGIN_OPENER_POLICY = 'same-origin-allow-popups'
 
 
 # Application definition
@@ -30,6 +31,8 @@ INSTALLED_APPS = [
     'core',
     'Products',
     'cart',
+
+
 ]
 
 MIDDLEWARE = [
@@ -125,3 +128,7 @@ LOGOUT_REDIRECT_URL = '/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# PAYPAL_RECEIVER_EMAIL = 'sb-xjnr029797491@business.example.com'
+# PAYPAL_TEST = True

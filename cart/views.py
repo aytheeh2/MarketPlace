@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from .import models
 from Products.models import Category, Item, Offers
-from .models import Cart
+from .models import Cart, Order
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
@@ -92,11 +92,34 @@ def delete_from_cart(request, pk):
 
 
 @login_required
+def place_order_form(request):
+    user = request.user
+    cart = Cart.objects.filter(user=user)
+    if request.method == 'POST':
+        address = request.POST['address']
+        phone = request.POST['phone']
+        
+
+    return render(request, 'place_order_form.html')
+    # user = request.user
+    # cart_items = Cart.objects.filter(user=user)
+    # # Fetch the latest offer for each product in the cart and calculate subtotal
+    # total_amount = 0
+    # for cart_item in cart_items:
+    #     if cart_item.products.offers.exists():
+    #         cart_item.latest_offer = cart_item.products.offers.latest(
+    #             'offer_date_added')
+    #         subtotal = cart_item.latest_offer.offer_discount * cart_item.quantity
+    #     else:
+    #         subtotal = cart_item.subtotal()
+    #     total_amount += subtotal
+    #     cart_item.subtotal_amount = subtotal
+    # return render(request, 'place_order_form.html', {'cart_items': cart_items, 'total_amount': total_amount})
+
+
 def checkout(request):
     user = request.user
     cart_items = Cart.objects.filter(user=user)
-
-    # Fetch the latest offer for each product in the cart and calculate subtotal
     total_amount = 0
     for cart_item in cart_items:
         if cart_item.products.offers.exists():
@@ -108,4 +131,13 @@ def checkout(request):
         total_amount += subtotal
         cart_item.subtotal_amount = subtotal
 
-    return render(request, 'order_form.html', {'cart_items': cart_items, 'total_amount': total_amount})
+    return render(request, 'checkout.html', {'cart_items': cart_items, 'total_amount': total_amount})
+
+
+def payment_success(request, total_amount):
+    # Process the payment success logic here
+    return render(request, 'payment_completed.html', {'total_amount': total_amount})
+
+
+# def paypal_payment_failed_view(request):
+#     return render(request, 'payment_failed.html')

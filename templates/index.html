@@ -56,10 +56,10 @@
       {%endfor%}
     </div>
 
-    <hr class="featurette-divider my-3">
+    <hr class="featurette-divider my-5">
     <h2 class="featurette-heading fw-normal display-4 lh-1 my-5 py-5">Offer Zone <span class="text-body-secondary">It’ll
         blow your mind.</span></h2>
-    <hr class="featurette-divider">
+    <hr class="featurette-divider my-5">
     {% for i in offer_products %}
     <!-- START THE Offer Zone -->
     {% if forloop.counter|divisibleby:2 %}
@@ -80,7 +80,7 @@
           role="img" preserveAspectRatio="xMidYMid slice">
       </div>
     </div>
-    <hr class="featurette-divider">
+    <hr class="featurette-divider my-5">
     {%else%}
     <div class="row featurette gy-2 p-5 my-2">
       <div class="col-md-7 order-md-2">
@@ -99,7 +99,7 @@
           role="img" preserveAspectRatio="xMidYMid slice">
       </div>
     </div>
-    <hr class="featurette-divider">
+    <hr class="featurette-divider my-5">
     {%endif%}
     <!-- /END THE Offer Zone -->
     {%endfor%}
