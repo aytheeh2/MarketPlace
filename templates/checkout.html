@@ -12,7 +12,7 @@
                 {% for i in cart_items %}
                 <li class="list-group-item d-flex justify-content-between lh-sm">
                     <div>
-                        <h6 class="my-0">{{i.products.name}}</h6>
+                        <h6 class="my-0">{{i.products.name}} ({{i.quantity}})</h6>
                         <small class="text-body-secondary">{{i.products.description | truncatechars:55 }}</small>
                     </div>
                     <span class="text-body-secondary fw-bold fs-6">
@@ -65,7 +65,6 @@
             <!-- Include the PayPal JavaScript SDK -->
             <script
                 src="https://www.paypal.com/sdk/js?client-id=AR8WHaIC-8YlbQ3qVPL-3fBK3ro9fbnzddaqnL59LBe8T_sm2mSHAxXBzCUU2qqtKW5t_4wMSlSDk0w7&currency=USD"></script>
-
             <script>
                 // Check if total amount is zero
                 var totalAmount = "{{ total_amount }}";
@@ -90,6 +89,7 @@
 
                                 alert('Transaction completed for ' + details.payer.name.given_name + '!');
                                 window.location.href = `success/${totalAmount}/`;
+                                //redirect to succesview just to set session status true.then redirect again to the order completed View
 
                             });
                         },
@@ -101,6 +101,7 @@
                     }).render('#paypal-button-container');
                 }
             </script>
+
         </div>
     </div>
 </div>

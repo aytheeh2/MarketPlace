@@ -20,7 +20,7 @@ class Cart(models.Model):
         return self.quantity * self.products.price
 
 
-class Order(models.Model):
+class Order_Table(models.Model):
     user = models.ForeignKey(
         User, related_name='order_user', on_delete=models.CASCADE,)
     delivery_status = models.CharField(default="Pending", max_length=10)
@@ -32,4 +32,4 @@ class Order(models.Model):
     phone = models.CharField(max_length=10)
 
     def __str__(self):
-        return f'{self.order_id}:{self.user}:{self.Products.name}'
+        return f'{self.Products.name}'

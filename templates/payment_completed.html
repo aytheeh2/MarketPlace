@@ -6,9 +6,35 @@
             <div class="display-6 text-center my-2">
                 <p class="my-3"></p>Payment Completed Successfully!<br></p>
                 <p>Thank You For Using Our Platform.<br></p>
-                <a href="" class="btn btn-primary btn-lg">View Order</a>
-                <a href="{% url 'core:home' %}" class="btn btn-primary btn-lg">Continue Shopping</a>
             </div>
+        </div>
+    </div>
+    <div class="row justify-content-center align-items-center ">
+        <div class="col-6">
+            <table class="table table-bordered">
+                <thead>
+                    <th>Item</th>
+                    <th>Price</th>
+                </thead>
+                <tbody>
+                    {% for i in cart_items %}
+                    <tr>
+                        <td>{{i}}</td>
+                        {% if i.latest_offer %}
+                        <td>${{ i.subtotal_amount }}</td>
+                        {% else %}
+                        <td>${{ i.subtotal }}</td>
+                        {% endif %}
+                    </tr>
+                    {%endfor%}
+                    <tr>
+                        <th>Total :</th>
+                        <th>{{total_amount}}</th>
+                    </tr>
+                </tbody>
+            </table>
+            <a href="{% url 'cart:delete_cart_after_payment_success' %}" class="btn btn-primary btn-lg">Continue
+                Shopping</a>
         </div>
     </div>
 </div>
