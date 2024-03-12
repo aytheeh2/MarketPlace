@@ -8,6 +8,12 @@ This project is a Django-based e-commerce platform where users can browse produc
 - Product Listing: Users can browse a variety of products listed on the platform.
 - Product Details: Users can view detailed information about each product, including its name, price, description, and availability.
 - Shopping Cart: Users can add products to their shopping cart, view their cart, and adjust the quantity of products in their cart.
-- Checkout: Users can proceed to checkout to complete their purchases.
+- Checkout: Users can proceed to checkout via Paypal to complete their purchases.
+
+
+## Bugs
+- url accessing and payment failed views.
+- linking order ID to payment ID
+
 
 ## Further Features will be added in the upcomig versions!!
